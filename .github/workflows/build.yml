@@ -1,8 +1,8 @@
 name: Build Kivy APK
 
 on:
-  workflow_dispatch:  # ✅ Manual trigger
-  push:                # ✅ Optional trigger on main branch push
+  workflow_dispatch:
+  push:
     branches:
       - main
 
@@ -11,31 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your repository
       - name: Checkout repository
-        uses: actions/checkout@v4   # ✅ Latest version
+        uses: actions/checkout@v4
 
-      # Step 2: Install dependencies
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3 python3-pip openjdk-17-jdk unzip zip libffi-dev libssl-dev
+          sudo apt install -y \
+            python3 python3-pip python3-dev \
+            openjdk-17-jdk unzip zip \
+            build-essential \
+            libffi-dev libssl-dev \
+            libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
+            zlib1g-dev
           pip install --upgrade pip
           pip install buildozer Cython virtualenv
 
-      # Step 3: Cache Buildozer (optional)
       - name: Cache Buildozer
         uses: actions/cache@v4
         with:
           path: .buildozer
           key: ${{ runner.os }}-buildozer
 
-      # Step 4: Build APK
       - name: Build APK
         run: |
           buildozer -v android debug
 
-      # ✅ Step 5: Upload APK artifact (fixed v4 version)
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
