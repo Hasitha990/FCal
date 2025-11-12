@@ -1,5 +1,4 @@
 [app]
-
 title = Fabric Finishing Calculator
 package.name = fabriccalculator
 package.domain = org.fabrictools
@@ -8,7 +7,6 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 
 version = 1.0
-
 requirements = python3,kivy==2.3.1
 
 orientation = portrait
@@ -22,10 +20,8 @@ android.ndk = 25b
 android.accept_sdk_license = True
 
 android.archs = arm64-v8a,armeabi-v7a
-
 android.release_artifact = apk
 
 [buildozer]
-
 log_level = 2
 warn_on_root = 1
