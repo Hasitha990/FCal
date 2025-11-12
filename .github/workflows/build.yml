@@ -1,8 +1,8 @@
 name: Build Kivy APK
 
 on:
-  workflow_dispatch:  # ✅ This line allows manual trigger from the Actions tab
-  push:                # ✅ Optional: also trigger when you push code to main branch
+  workflow_dispatch:  # ✅ Manual trigger
+  push:                # ✅ Optional trigger on main branch push
     branches:
       - main
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       # Step 1: Checkout your repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4   # ✅ Latest version
 
       # Step 2: Install dependencies
       - name: Install dependencies
@@ -23,9 +23,9 @@ jobs:
           pip install --upgrade pip
           pip install buildozer Cython virtualenv
 
-      # Step 3: Cache Buildozer (optional, speeds up builds)
+      # Step 3: Cache Buildozer (optional)
       - name: Cache Buildozer
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .buildozer
           key: ${{ runner.os }}-buildozer
@@ -35,9 +35,9 @@ jobs:
         run: |
           buildozer -v android debug
 
-      # Step 5: Upload APK as workflow artifact
+      # ✅ Step 5: Upload APK artifact (fixed v4 version)
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: KivyApp-APK
           path: bin/*.apk
